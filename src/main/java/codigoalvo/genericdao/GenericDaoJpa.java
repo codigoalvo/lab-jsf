@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 public abstract class GenericDaoJpa<T> implements GenericDao<T> {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="default")
     protected EntityManager entityManager;
 
     @SuppressWarnings("unchecked")

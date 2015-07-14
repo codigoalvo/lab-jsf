@@ -3,6 +3,7 @@ package codigoalvo.modelo.dao;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import codigoalvo.genericdao.GenericDaoJpa;
 import codigoalvo.modelo.entidades.Usuario;
 
@@ -10,6 +11,7 @@ import codigoalvo.modelo.entidades.Usuario;
 public class UsuarioDaoJpa extends GenericDaoJpa<Usuario> implements UsuarioDao<Usuario> {
 
     @Override
+    @Transactional
     public Usuario localizaPorLogin(String login) {
 	String jpql = "from Usuario where upper(login) = :login";
 	Query query = entityManager.createQuery(jpql);

@@ -7,21 +7,22 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import codigoalvo.modelo.dao.UsuarioDaoJpa;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import codigoalvo.modelo.dao.UsuarioDao;
 import codigoalvo.modelo.entidades.Usuario;
 import codigoalvo.util.MensagemUtil;
 import codigoalvo.util.SegurancaUtil;
 
 @ManagedBean(name = "controleLogin")
 @SessionScoped
-public class ControleLogin implements Serializable {
+public class ControleLogin extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 3670261714704666556L;
 
     public static int MAXIMO_TENTATIVAS_LOGIN = 5;
 
     @Autowired
-    private UsuarioDaoJpa usuarioDaoJpa;
+    private UsuarioDao usuarioDao;
 
     private Usuario usuarioLogado;
     private Integer tentativasInvalidas;
@@ -41,7 +42,7 @@ public class ControleLogin implements Serializable {
     @Transactional
     public String efetuarLogin() {
 	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
-	Usuario usuario = usuarioDaoJpa.localizaPorLogin(login);
+	Usuario usuario = usuarioDao.localizaPorLogin(login);
 	if (usuario == null || usuario.getId() == null) {
 	    MensagemUtil.enviarMensagemAviso("Usuário ou senha inválidos!");
 	    tentativasInvalidas++;
@@ -54,7 +55,7 @@ public class ControleLogin implements Serializable {
 		usuario.setDataUltimoLogin(new Date());
 		usuario.setTentativasLoginInvalido(0);
 		usuario.setDataUltimaFalhaLogin(null);
-		usuarioDaoJpa.update(usuario);
+		usuarioDao.update(usuario);
 		tentativasInvalidas = 0;
 		usuarioLogado = usuario;
 		MensagemUtil.enviarMensagemInfo("Login efetuado com sucesso!");
@@ -62,14 +63,14 @@ public class ControleLogin implements Serializable {
 	    } else if (usuario.getTentativasLoginInvalido() >= MAXIMO_TENTATIVAS_LOGIN) {
 		usuario.setDataUltimaFalhaLogin(new Date());
 		usuario.setAtivo(false);
-		usuarioDaoJpa.update(usuario);
+		usuarioDao.update(usuario);
 		tentativasInvalidas++;
 		MensagemUtil.enviarMensagemAviso("Senha inválida! - Usuário desativado por excesso de tentativas de login!");
 		return "/login";
 	    } else {
 		usuario.setTentativasLoginInvalido(usuario.getTentativasLoginInvalido()+1);
 		usuario.setDataUltimaFalhaLogin(new Date());
-		usuarioDaoJpa.update(usuario);
+		usuarioDao.update(usuario);
 		tentativasInvalidas++;
 		MensagemUtil.enviarMensagemAviso("Senha inválida! - Tentativa " + usuario.getTentativasLoginInvalido() + " de "
 		        + MAXIMO_TENTATIVAS_LOGIN);
