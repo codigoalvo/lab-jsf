@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<f:view contentType="text/html" encoding="UTF-8" locale="##{controleLocale.currentLocale}">
+	<h:head>
+		<title><ui:insert name="tituloJanela" /></title>
+		<h:outputStylesheet library="css" name="alvo.css" />
+		<h:outputStylesheet library="css" name="estilos.css" />
+		<h:outputScript library="scripts" name="scripts.js" />
+	</h:head>
+	<h:body>
+		<div id="page">
+			<div class="inner">
+				<div id="header">
+					<ui:include src="/templates/cabecalho.xhtml" />
+				</div>
+				<div class="conteudo" align="center">
+					<ui:insert name="conteudo" />
+				</div>
+				<div id="footer">
+					<ui:insert name="rodape" />
+				</div>
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

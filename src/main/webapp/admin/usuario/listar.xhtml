@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="tituloJanela">Listagem de funcionário</ui:define>
+	<ui:define name="rodape"><div align="center"><h:messages id="messages" /></div></ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<h:dataTable value="#{controleUsuario.usuarios}" var="usuario" rules="cols" cellpadding="3" width="100%">
+				<f:facet name="header">
+					<div align="center" style="border-bottom:1px solid grey;padding:3px;">
+						<h:outputLabel value="Listagem de Funcionarios" />
+						<h:commandButton action="#{controleUsuario.novo()}" value="Novo" />
+					</div>
+				</f:facet>
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					<h:outputText value="#{usuario.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Login</f:facet>
+					<h:outputText value="#{usuario.login}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{usuario.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Email</f:facet>
+					<h:outputText value="#{usuario.email}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Tipo</f:facet>
+					<h:outputText value="#{usuario.tipo.descricao}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ativo</f:facet>
+					<h:outputText value="#{usuario.ativo}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Alterar</f:facet>
+					<h:commandLink action="#{controleUsuario.alterar(usuario)}" value="Alterar" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Excluir</f:facet>
+					<h:commandLink action="#{controleUsuario.excluir(usuario)}" value="Excluir"
+						onclick="if (!confirm('Confirma a exclussão de #{usuario.login}?')) return false" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
