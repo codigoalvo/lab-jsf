@@ -1,10 +1,12 @@
 package codigoalvo.controle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -28,12 +30,26 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     private Usuario usuario;
     private Boolean editando;
 
+    private SelectItem[] tiposUsuario;
+
     public ControleUsuario() {
 	editando = false;
+	carregaTiposUsuario();
     }
 
-    public TipoUsuario[] getTiposUsuario() {
-	return TipoUsuario.values();
+    private void carregaTiposUsuario() {
+	List<SelectItem> tipos = new ArrayList<>();
+	SelectItem selecione = new SelectItem("", "- Selecione -");
+	selecione.setNoSelectionOption(true);
+	tipos.add(selecione);
+	for (TipoUsuario tipo : TipoUsuario.values()) {
+	    tipos.add(new SelectItem(tipo, tipo.getDescricao()));
+	}
+	tiposUsuario = tipos.toArray(new SelectItem[0]);
+    }
+
+    public SelectItem[] getTiposUsuario() {
+	return tiposUsuario;
     }
 
     public String listar() {
