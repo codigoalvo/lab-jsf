@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.modelo.dao.UsuarioDao;
 import codigoalvo.modelo.entidades.TipoUsuario;
 import codigoalvo.modelo.entidades.Usuario;
@@ -15,12 +16,12 @@ import codigoalvo.util.SegurancaUtil;
 
 @ManagedBean(name = "controleUsuario")
 @SessionScoped
-public class ControleUsuario implements Serializable {
+public class ControleUsuario extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 5839585352684182713L;
 
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuarioDao<Usuario> usuarioDao;
 
     private List<Usuario> usuarios;
 

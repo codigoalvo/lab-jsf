@@ -22,7 +22,7 @@ public class ControleLogin extends SpringBeanAutowiringSupport implements Serial
     public static int MAXIMO_TENTATIVAS_LOGIN = 5;
 
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuarioDao<Usuario> usuarioDao;
 
     private Usuario usuarioLogado;
     private Integer tentativasInvalidas;
