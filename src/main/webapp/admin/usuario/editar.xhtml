@@ -7,29 +7,29 @@
 	<ui:define name="conteudo">
 		<h:form id="editar" prependId="false">
 			<h:panelGrid columns="2">
-				<f:facet name="headder">Administração de usuário</f:facet>
+				<f:facet name="headder">#{msg['usuario.editar.titulo']}</f:facet>
 				<f:facet name="footer">
 					<div align="center">
-						<h:commandButton action="#{controleUsuario.cancelar()}" value="Cancelar" immediate="true" />
-						<h:commandButton action="#{controleUsuario.gravar()}" value="Gravar" />
+						<h:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true" />
+						<h:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.salvar']}" />
 					</div>
 				</f:facet>
-				<h:outputLabel value="Id" for="ID" />
+				<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
 				<h:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
-				<h:outputLabel value="Login" for="LOGIN" />
+				<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
 				<h:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
-				<h:outputLabel value="Senha" for="SENHA" />
+				<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
 				<h:inputSecret value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
-				<h:outputLabel value="Nome" for="NOME" />
+				<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
 				<h:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
-				<h:outputLabel value="Email" for="EMAIL" />
+				<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />
 				<h:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
-				<h:outputLabel value="Tipo" for="TIPO" />
+				<h:outputLabel value="#{msg['usuario.tipo']}" for="TIPO" />
 				<h:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO">
 					<f:selectItem itemLabel="- Selecione -" noSelectionOption="true" />
 					<f:selectItems value="#{controleUsuario.tiposUsuario}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 				</h:selectOneMenu>
-				<h:outputLabel value="Ativo" for="ATIVO" />
+				<h:outputLabel value="#{msg['usuario.ativo']}" for="ATIVO" />
 				<h:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
 			</h:panelGrid>
 		</h:form>

@@ -5,6 +5,16 @@
 
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
+		<locale-config>
+			<default-locale>en_US</default-locale>
+			<supported-locale>en_US</supported-locale>
+			<supported-locale>pt_BR</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>codigoalvo.msg.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
 	</application>
 
 </faces-config>

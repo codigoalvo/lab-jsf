@@ -1,28 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
 <ui:composition template="/templates/template.xhtml">
-	<ui:define name="tituloJanela">Login do sistema</ui:define>
+	<ui:define name="tituloJanela">#{msg['login.titulo']}</ui:define>
 				<ui:define name="rodape"><div align="center"><h:messages id="messages" /></div></ui:define>
 	<ui:define name="conteudo">
 		<div align="center">
 			<h:form id="login" prependId="false">
 				<h:panelGrid columns="2">
-					<f:facet name="header">Dados do usuário</f:facet>
+					<f:facet name="header">#{msg['login.cabecalho']}</f:facet>
 					<f:facet name="footer">
 						<div align="center">
-							<h:commandButton action="#{controleLogin.efetuarLogin()}" value="Login"/>
+							<h:commandButton action="#{controleLogin.efetuarLogin()}" value="#{msg['login.enviar']}"/>
 						</div>
 					</f:facet>
-					<h:outputLabel value="Usuario" for="Usuario" />
+					<h:outputLabel value="#{msg['login.usuario']}" for="Usuario" />
 					<h:inputText value="#{controleLogin.login}" id="Usuario" />
-					<h:outputLabel value="Senha" for="Senha" />
+					<h:outputLabel value="#{msg['login.senha']}" for="Senha" />
 					<h:inputSecret value="#{controleLogin.senha}" id="Senha" redisplay="true" />
 				</h:panelGrid>
-				<h:panelGroup id="captchaPnl" rendered="#{controleLogin.deveExibirCaptcha()}" style="padding:3px;">
-					<p:captcha label="Captcha" theme="white" requiredMessage="Informe um valor ao Captcha" validatorMessage="Valor incorreto informado no Captcha" />
-				</h:panelGroup>
 			</h:form>
 		</div>
 	</ui:define>

@@ -28,7 +28,6 @@ public class ControleLogin extends SpringBeanAutowiringSupport implements Serial
     private Integer tentativasInvalidas;
 
     private String login;
-
     private String senha;
 
     public ControleLogin() {
