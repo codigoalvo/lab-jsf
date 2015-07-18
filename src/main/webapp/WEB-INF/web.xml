@@ -41,4 +41,9 @@
 		<param-value>6LcxPAkTAAAAAMpeRNZKa9zyiLWZwcbo8GxVc_NP</param-value>
 	</context-param>
 
+	<context-param>  
+		<param-name>primefaces.THEME</param-name>  
+		<param-value>codigoalvo</param-value>  
+	</context-param>
+
 </web-app>

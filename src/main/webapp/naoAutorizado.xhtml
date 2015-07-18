@@ -4,12 +4,8 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="tituloJanela">#{msg['acessoNegado.titulo']}</ui:define>
+	<ui:define name="rodape"><div align="center"><h:messages id="messages" /></div></ui:define>
 	<ui:define name="conteudo">
-		<ui:define name="rodape">
-			<div align="center">
-				<h:messages id="messages" />
-			</div>
-		</ui:define>
 		<h1>#{msg['acessoNegado.mensagem']}</h1>
 		<h:graphicImage library="images" name="denied.png" />
 	</ui:define>

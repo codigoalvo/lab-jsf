@@ -7,31 +7,31 @@
 	<ui:define name="rodape"><div align="center"><h:messages id="messages" /></div></ui:define>
 	<ui:define name="conteudo">
 		<h:form id="editar" prependId="false">
-			<h:panelGrid columns="2">
-				<f:facet name="headder">#{msg['usuario.editar.titulo']}</f:facet>
+			<p:panelGrid columns="2">
+				<f:facet name="header"><div style="padding:10px;"><h:outputText value="#{msg['usuario.editar.titulo']}" /></div></f:facet>
 				<f:facet name="footer">
 					<div align="center">
-						<h:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true" />
-						<h:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.salvar']}" />
+						<p:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true" ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
+						<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.salvar']}" ajax="false" icon="ui-icon-check" styleClass="botaoVerde margem_10" />
 					</div>
 				</f:facet>
 				<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
-				<h:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
+				<p:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
 				<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
-				<h:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
+				<p:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
 				<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
-				<h:inputSecret value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
+				<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" readonly="#{controleUsuario.usuario.id != null}" />
 				<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
-				<h:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
+				<p:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
 				<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />
-				<h:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
+				<p:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
 				<h:outputLabel value="#{msg['usuario.tipo']}" for="TIPO" />
-				<h:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO">
+				<p:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO">
 					<f:selectItems value="#{controleUsuario.tiposUsuario}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<h:outputLabel value="#{msg['usuario.ativo']}" for="ATIVO" />
-				<h:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
-			</h:panelGrid>
+				<p:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
+			</p:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

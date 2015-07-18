@@ -4,50 +4,46 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="tituloJanela">#{msg['usuario.listar.titulo']}</ui:define>
-	<ui:define name="rodape"><div align="center"><h:messages id="messages" /></div></ui:define>
 	<ui:define name="conteudo">
 		<h:form>
-			<h:dataTable value="#{controleUsuario.usuarios}" var="usuario" rules="cols" cellpadding="3" width="100%">
+			<p:growl id="messages" />
+			<p:dataTable value="#{controleUsuario.usuarios}" var="usuario" paginator="true" paginatorPosition="bottom" rows="5" resizableColumns="true"  tableStyle="table-layout: auto;" style="width:95%;">
 				<f:facet name="header">
-					<div align="center" style="border-bottom:1px solid grey;padding:5px;">
-						<h:outputLabel value="#{msg['usuario.listar.titulo']}" style="padding:5px;"/>
-						<h:commandButton action="#{controleUsuario.novo()}" value="#{msg['listar.novo']}" />
+					<div align="center">
+						<h:outputLabel value="#{msg['usuario.listar.titulo']}" style="padding:5px;" />
 					</div>
 				</f:facet>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.id']}</f:facet>
+				<p:column headerText="#{msg['usuario.id']}" width="3%">
 					<h:outputText value="#{usuario.id}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.login']}</f:facet>
+				</p:column>
+				<p:column headerText="#{msg['usuario.login']}" width="15%">
 					<h:outputText value="#{usuario.login}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.nome']}</f:facet>
+				</p:column>
+				<p:column headerText="#{msg['usuario.nome']}" width="25%">
 					<h:outputText value="#{usuario.nome}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.email']}</f:facet>
+				</p:column>
+				<p:column headerText="#{msg['usuario.email']}" width="25%">
 					<h:outputText value="#{usuario.email}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.tipo']}</f:facet>
+				</p:column>
+				<p:column headerText="#{msg['usuario.tipo']}" width="10%">
 					<h:outputText value="#{usuario.tipo.descricao}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['usuario.ativo']}</f:facet>
-					<h:outputText value="#{usuario.ativo}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['listar.alterar']}</f:facet>
-					<h:commandLink action="#{controleUsuario.alterar(usuario)}" value="#{msg['listar.alterar']}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">#{msg['listar.excluir']}</f:facet>
-					<h:commandLink action="#{controleUsuario.excluir(usuario)}" value="#{msg['listar.excluir']}"
-						onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false" />
-				</h:column>
-			</h:dataTable>
+				</p:column>
+				<p:column headerText="#{msg['usuario.ativo']}" width="4%">
+					<h:outputText value="#{usuario.ativo?msg['sim']:msg['nao']}" />
+				</p:column>
+				<p:column width="10%">
+					<f:facet name="header">
+						<div align="center">
+							<p:commandButton action="#{controleUsuario.novo()}" value="#{msg['listar.novo']}" icon="ui-icon-document" />
+						</div>
+					</f:facet>
+					<div align="center" >
+							<p:commandButton action="#{controleUsuario.alterar(usuario)}" title="#{msg['listar.alterar']}" icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza" />
+							<p:commandButton action="#{controleUsuario.excluir(usuario)}" title="#{msg['listar.excluir']}" icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza"
+								onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false" />
+					</div>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

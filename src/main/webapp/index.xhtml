@@ -4,6 +4,7 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="tituloJanela">#{msg['home.titulo']}</ui:define>
+	<ui:define name="rodape"><div align="center">#{msg['rodape.mensagem']}</div></ui:define>
 	<ui:define name="conteudo">
 		#{msg['home.bemvindo']}
 		<h:form>
@@ -16,9 +17,6 @@
 				</h:commandLink>
 			</h:panelGroup>
 		</h:form>
-	</ui:define>
-	<ui:define name="rodape">
-		<div align="center">#{msg['rodape.mensagem']}</div>
 	</ui:define>
 </ui:composition>
 </html>

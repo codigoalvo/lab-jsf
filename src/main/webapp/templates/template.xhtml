@@ -5,22 +5,19 @@
 <f:view contentType="text/html" encoding="UTF-8" locale="#{controleLocale.currentLocale}">
 	<h:head>
 		<title><ui:insert name="tituloJanela" /></title>
-		<h:outputStylesheet library="css" name="alvo.css" />
 		<h:outputStylesheet library="css" name="estilos.css" />
 		<h:outputScript library="scripts" name="scripts.js" />
 	</h:head>
 	<h:body>
-		<div id="page">
-			<div class="inner">
-				<div id="header">
-					<ui:include src="/templates/cabecalho.xhtml" />
-				</div>
-				<div class="conteudo" align="center">
-					<ui:insert name="conteudo" />
-				</div>
-				<div id="footer">
-					<ui:insert name="rodape" />
-				</div>
+		<div class="pagina">
+			<div id="cabecalho" align="left">
+				<ui:include src="/templates/cabecalho.xhtml" />
+			</div>
+			<div class="conteudo" align="center">
+				<ui:insert name="conteudo" />
+			</div>
+			<div id="rodape">
+				<ui:insert name="rodape" />
 			</div>
 		</div>
 	</h:body>
