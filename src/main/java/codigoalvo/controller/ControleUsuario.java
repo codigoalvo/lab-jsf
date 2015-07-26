@@ -1,4 +1,4 @@
-package codigoalvo.controle;
+package codigoalvo.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ import javax.faces.model.SelectItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import codigoalvo.modelo.dao.UsuarioDao;
-import codigoalvo.modelo.entidades.TipoUsuario;
-import codigoalvo.modelo.entidades.Usuario;
-import codigoalvo.util.MensagemUtil;
+import codigoalvo.entity.UsuarioTipo;
+import codigoalvo.entity.Usuario;
+import codigoalvo.repository.UsuarioDao;
+import codigoalvo.util.MsgUtil;
 import codigoalvo.util.SegurancaUtil;
 
 @ManagedBean(name = "controleUsuario")
@@ -24,6 +24,9 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 
     @Autowired
     private UsuarioDao<Usuario> usuarioDao;
+
+    @Autowired
+    SegurancaUtil segurancaUtil;
 
     private List<Usuario> usuarios;
 
@@ -39,10 +42,10 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 
     private void carregaTiposUsuario() {
 	List<SelectItem> tipos = new ArrayList<>();
-	SelectItem selecione = new SelectItem("", "- Selecione -");
+	SelectItem selecione = new SelectItem("", MsgUtil.i18nMsg("selectitem.selecione"));
 	selecione.setNoSelectionOption(true);
 	tipos.add(selecione);
-	for (TipoUsuario tipo : TipoUsuario.values()) {
+	for (UsuarioTipo tipo : UsuarioTipo.values()) {
 	    tipos.add(new SelectItem(tipo, tipo.getDescricao()));
 	}
 	tiposUsuario = tipos.toArray(new SelectItem[0]);
@@ -53,7 +56,7 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     }
 
     public String listar() {
-	usuarios = usuarioDao.listAll();
+	usuarios = usuarioDao.listar();
 	editando = false;
 	return "/admin/usuario/listar?faces-redirect=true";
     }
@@ -71,20 +74,22 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     public String gravar() {
 	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	String senhaText = usuario.getSenha();
+	if (!segurancaUtil.criptografado(usuario.getSenha())) {
+	    usuario.setSenha(segurancaUtil.criptografar(senhaText));
+	}
 	try {
 	    if (usuario.getId() == null) {
-		usuario.setSenha(SegurancaUtil.criptografar(senhaText));
-		usuarioDao.create(usuario);
+		usuarioDao.criar(usuario);
 	    } else {
-		usuarioDao.update(usuario);
+		usuarioDao.atualizar(usuario);
 	    }
-	    MensagemUtil.enviarMensagemInfo("Usuário gravado com sucesso!");
+	    MsgUtil.enviarMsgInfo("gravar.sucesso");
 	    return "listar";
 	} catch (Throwable exc) {
 	    if (usuario.getId() == null) {
 		usuario.setSenha(senhaText);
 	    }
-	    MensagemUtil.enviarMensagemErro("Erro ao gravar o usuário!");
+	    MsgUtil.enviarMsgErro("gravar.erro");
 	    return "editar";
 	}
     }
@@ -99,10 +104,10 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     public String excluir(Usuario usuario) {
 	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	try {
-	    usuarioDao.delete(usuario);
-	    MensagemUtil.enviarMensagemInfo("Usuário removido com sucesso!");
+	    usuarioDao.remover(usuario);
+	    MsgUtil.enviarMsgInfo("remover.sucesso");
 	} catch (Throwable exc) {
-	    MensagemUtil.enviarMensagemErro("Erro ao remover o usuário!");
+	    MsgUtil.enviarMsgErro("remover.erro");
 	}
 	return "listar";
     }

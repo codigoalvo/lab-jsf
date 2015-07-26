@@ -12,7 +12,7 @@
 				<f:facet name="footer">
 					<div align="center">
 						<p:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true" ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
-						<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.salvar']}" ajax="false" icon="ui-icon-check" styleClass="botaoVerde margem_10" />
+						<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.gravar']}" ajax="false" icon="ui-icon-check" styleClass="botaoVerde margem_10" />
 					</div>
 				</f:facet>
 				<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
@@ -20,7 +20,7 @@
 				<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
 				<p:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
 				<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
-				<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" readonly="#{controleUsuario.usuario.id != null}" />
+				<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
 				<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
 				<p:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
 				<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />

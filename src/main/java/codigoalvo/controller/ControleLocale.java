@@ -1,4 +1,4 @@
-package codigoalvo.controle;
+package codigoalvo.controller;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -6,10 +6,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @ManagedBean(name="controleLocale")
 @SessionScoped
-public class ControleLocale implements Serializable {
+public class ControleLocale extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

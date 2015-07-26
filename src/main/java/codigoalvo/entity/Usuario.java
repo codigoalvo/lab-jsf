@@ -1,4 +1,4 @@
-package codigoalvo.modelo.entidades;
+package codigoalvo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -49,7 +49,7 @@ public class Usuario implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private TipoUsuario tipo;
+    private UsuarioTipo tipo;
 
     @Lob
     private byte[] imagem;
@@ -136,11 +136,11 @@ public class Usuario implements Serializable {
 	this.email = email;
     }
 
-    public TipoUsuario getTipo() {
+    public UsuarioTipo getTipo() {
 	return tipo;
     }
 
-    public void setTipo(TipoUsuario tipo) {
+    public void setTipo(UsuarioTipo tipo) {
 	this.tipo = tipo;
     }
 

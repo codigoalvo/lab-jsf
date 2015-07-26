@@ -1,12 +1,12 @@
-package codigoalvo.modelo.entidades;
+package codigoalvo.entity;
 
-public enum TipoUsuario {
+public enum UsuarioTipo {
 
     ADMIN("Administrador"), USER("Usuário");
 
     private String descricao;
 
-    TipoUsuario(String descricao) {
+    UsuarioTipo(String descricao) {
 	this.descricao = descricao;
     }
 

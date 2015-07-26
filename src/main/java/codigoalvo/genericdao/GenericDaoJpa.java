@@ -4,8 +4,10 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public abstract class GenericDaoJpa<T> implements GenericDao<T> {
 
     @PersistenceContext
@@ -18,33 +20,33 @@ public abstract class GenericDaoJpa<T> implements GenericDao<T> {
 
     @Override
     @Transactional
-    public T create(final T entity) {
+    public T criar(final T entity) {
 	this.entityManager.persist(entity);
 	return entity;
     }
 
     @Override
     @Transactional
-    public void delete(final Object id) {
+    public void remover(final Object id) {
 	this.entityManager.remove(this.entityManager.getReference(getTypeClass(), id));
     }
 
     @Override
     @Transactional
-    public T find(final Object id) {
+    public T buscar(final Object id) {
 	return this.entityManager.find(getTypeClass(), id);
     }
 
     @Override
     @Transactional
-    public T update(final T entity) {
+    public T atualizar(final T entity) {
 	return this.entityManager.merge(entity);
     }
 
     @Override
     @Transactional
     @SuppressWarnings("unchecked")
-    public List<T> listAll() {
+    public List<T> listar() {
 	return entityManager.createQuery(("FROM " + getTypeClass().getName())).getResultList();
     }
 

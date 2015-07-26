@@ -3,6 +3,22 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
 	version="2.1">
 
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+		<navigation-case>
+		    <from-outcome>denied</from-outcome>
+			<to-view-id>/denied.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 

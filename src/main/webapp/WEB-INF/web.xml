@@ -26,7 +26,18 @@
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>SegurancaFilter</filter-name>
+		<filter-class>codigoalvo.filter.SegurancaWebFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SegurancaFilter</filter-name>
+		<url-pattern>/privado/*</url-pattern>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -40,7 +51,6 @@
 		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
 		<param-value>6LcxPAkTAAAAAMpeRNZKa9zyiLWZwcbo8GxVc_NP</param-value>
 	</context-param>
-
 	<context-param>  
 		<param-name>primefaces.THEME</param-name>  
 		<param-value>codigoalvo</param-value>  
