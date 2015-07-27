@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.entity.Usuario;
 import codigoalvo.service.LoginService;
-import codigoalvo.util.ErrosUtil;
 import codigoalvo.util.MsgUtil;
 
 @ManagedBean(name = "controleLogin")
@@ -46,7 +45,7 @@ public class ControleLogin extends SpringBeanAutowiringSupport implements Serial
 	} catch (Exception exc) {
 	    usuarioLogado = null;
 	    tentativasInvalidas++;
-	    MsgUtil.enviarMsgAviso(ErrosUtil.getMensagemErro(exc));
+	    MsgUtil.enviarMsgAviso(exc.getMessage());
 	    return PAG_LOGIN_URL;
 	}
     }

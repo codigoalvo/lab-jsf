@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 public class MsgUtil {
 
     private static final Logger LOGGER = Logger.getLogger(MsgUtil.class);
+    private static final boolean DETAIN_IN_SUMARY = true;
 
     public static void enviarMsgInfo(String message) {
 	enviarMsgInfo(message, "");
@@ -37,10 +38,14 @@ public class MsgUtil {
 
     private static void enviarMsg(FacesMessage.Severity severity, String summary, String detail) {
 	Object[] paramArray = MsgParamUtil.getParamArray(summary);
-	if (paramArray. length > 0) {
+	if (paramArray.length > 0) {
 	    summary = MsgParamUtil.getMessageId(summary);
 	}
 	summary = i18nMsg(summary, paramArray);
+	if (DETAIN_IN_SUMARY && detail != null && !detail.isEmpty()) {
+	    summary += " (" + detail + ")";
+	    detail = null;
+	}
 	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
 	FacesContext context = FacesContext.getCurrentInstance();
 	if (context != null) {
@@ -57,7 +62,7 @@ public class MsgUtil {
 	ResourceBundle bundle = ResourceBundle.getBundle("codigoalvo.msg.messages", locale);
 	try {
 	    msg = bundle.getString(messageId);
-	    if (arguments != null  &&  arguments.length > 0) {
+	    if (arguments != null && arguments.length > 0) {
 		msg = MessageFormat.format(msg, arguments);
 	    }
 	} catch (Exception exc) {

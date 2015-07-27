@@ -1,6 +1,7 @@
 package codigoalvo.controller;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -8,13 +9,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import codigoalvo.entity.UsuarioTipo;
 import codigoalvo.entity.Usuario;
-import codigoalvo.repository.UsuarioDao;
+import codigoalvo.entity.UsuarioTipo;
+import codigoalvo.service.UsuarioService;
+import codigoalvo.util.ErrosUtil;
 import codigoalvo.util.MsgUtil;
-import codigoalvo.util.SegurancaUtil;
 
 @ManagedBean(name = "controleUsuario")
 @SessionScoped
@@ -23,10 +23,7 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     private static final long serialVersionUID = 5839585352684182713L;
 
     @Autowired
-    private UsuarioDao<Usuario> usuarioDao;
-
-    @Autowired
-    SegurancaUtil segurancaUtil;
+    private UsuarioService usuarioService;
 
     private List<Usuario> usuarios;
 
@@ -55,14 +52,13 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 	return tiposUsuario;
     }
 
-    public String listar() {
-	usuarios = usuarioDao.listar();
-	editando = false;
-	return "/admin/usuario/listar?faces-redirect=true";
-    }
-
     public String novo() {
 	usuario = new Usuario();
+	return "editar";
+    }
+
+    public String alterar(Usuario usuario) {
+	this.usuario = usuario;
 	return "editar";
     }
 
@@ -70,44 +66,31 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 	return "listar";
     }
 
-    @Transactional
+    public String listar() {
+	usuarios = usuarioService.listar();
+	editando = false;
+	return "/admin/usuario/listar?faces-redirect=true";
+    }
+
     public String gravar() {
 	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
-	String senhaText = usuario.getSenha();
-	if (!segurancaUtil.criptografado(usuario.getSenha())) {
-	    usuario.setSenha(segurancaUtil.criptografar(senhaText));
-	}
 	try {
-	    if (usuario.getId() == null) {
-		usuarioDao.criar(usuario);
-	    } else {
-		usuarioDao.atualizar(usuario);
-	    }
+	    usuario = usuarioService.gravar(usuario);
 	    MsgUtil.enviarMsgInfo("gravar.sucesso");
 	    return "listar";
-	} catch (Throwable exc) {
-	    if (usuario.getId() == null) {
-		usuario.setSenha(senhaText);
-	    }
-	    MsgUtil.enviarMsgErro("gravar.erro");
+	} catch (SQLException exc) {
+	    MsgUtil.enviarMsgErro("gravar.erro", ErrosUtil.getMensagemErro(exc));
 	    return "editar";
 	}
     }
 
-    @Transactional
-    public String alterar(Usuario usuario) {
-	this.usuario = usuario;
-	return "editar";
-    }
-
-    @Transactional
     public String excluir(Usuario usuario) {
 	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	try {
-	    usuarioDao.remover(usuario);
+	    usuarioService.remover(usuario);
 	    MsgUtil.enviarMsgInfo("remover.sucesso");
-	} catch (Throwable exc) {
-	    MsgUtil.enviarMsgErro("remover.erro");
+	} catch (SQLException exc) {
+	    MsgUtil.enviarMsgErro("remover.erro", ErrosUtil.getMensagemErro(exc));
 	}
 	return "listar";
     }
