@@ -34,6 +34,7 @@ public class SegurancaWebFilter implements Serializable, Filter {
 	ControleLogin controleLogin = (ControleLogin)sessao.getAttribute("controleLogin");
 	String pagina = httpRequest.getRequestURL().toString();
 	if (controleLogin == null || controleLogin.getUsuarioLogado() == null) {
+	    LOGGER.debug("controleLogin: "+(controleLogin==null?"null":("usuario: "+controleLogin.getUsuarioLogado())));
 	    LOGGER.debug(httpRequest.getRemoteAddr() + " [!] " + pagina);
 	    httpResponse.sendRedirect(contextPath + "/login" + FACES);
 	} else {
