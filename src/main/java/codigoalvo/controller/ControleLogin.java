@@ -2,25 +2,27 @@ package codigoalvo.controller;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import codigoalvo.entity.Usuario;
 import codigoalvo.service.LoginService;
 import codigoalvo.util.MsgUtil;
 
+@Named
+@Scope("session")
 @ManagedBean(name = "controleLogin")
-@SessionScoped
-public class ControleLogin extends SpringBeanAutowiringSupport implements Serializable {
+public class ControleLogin implements Serializable {
 
     private static final long serialVersionUID = 3670261714704666556L;
 
     public static final String PAG_LOGIN_URL = "login";
     public static final String PAG_HOME_URL = "home";
 
-    @Autowired
-    private LoginService loginService;
+    @Inject
+    private transient LoginService loginService;
 
     private Usuario usuarioLogado;
     private Integer tentativasInvalidas;
@@ -29,6 +31,7 @@ public class ControleLogin extends SpringBeanAutowiringSupport implements Serial
     private String senha;
 
     public ControleLogin() {
+	Logger.getLogger(ControleLogin.class).debug("construct");
 	tentativasInvalidas = 0;
     }
 
