@@ -3,11 +3,18 @@ package codigoalvo.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 
-@Component
+@Named
+@RequestScoped
 public class SegurancaUtilMd5 implements SegurancaUtil {
+
+    public SegurancaUtilMd5() {
+	Logger.getLogger(SegurancaUtilMd5.class).debug("####################  construct  ####################");
+    }
 
     @Override
     public String criptografar(String conteudo) {

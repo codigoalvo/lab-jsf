@@ -2,22 +2,28 @@ package codigoalvo.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.NoResultException;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import codigoalvo.entity.Usuario;
 import codigoalvo.repository.UsuarioDao;
 import codigoalvo.util.SegurancaUtil;
 
-@Service
+@Named
+@RequestScoped
 public class UsuarioServiceImpl implements UsuarioService {
 
-    @Autowired
+    @Inject
     private UsuarioDao usuarioDao;
 
-    @Autowired
+    @Inject
     SegurancaUtil segurancaUtil;
+
+    public UsuarioServiceImpl() {
+	Logger.getLogger(UsuarioServiceImpl.class).debug("####################  construct  ####################");
+    }
 
     @Override
     public Usuario gravar(Usuario usuario)
@@ -38,16 +44,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	    if (usuario.getId() == null) {
 		usuario.setSenha(senhaText);
 	    }
-	    throw new SQLException(exc);
+	    throw exc;
 	}
 
     }
 
     @Override
-    public void remover(Object id)
+    public void remover(Usuario usuario)
 	throws SQLException {
 	try {
-	    usuarioDao.remover(id);
+	    usuarioDao.remover(usuario.getId());
 	} catch (Throwable exc) {
 	    throw new SQLException(exc);
 	}
@@ -55,7 +61,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario buscar(Object id) {
+    public void removerPorId(Integer id)
+        throws SQLException {
+	try {
+	    usuarioDao.remover(id);
+	} catch (Throwable exc) {
+	    throw new SQLException(exc);
+	}
+    }
+
+    @Override
+    public Usuario buscar(Integer id) {
 	return usuarioDao.buscar(id);
     }
 

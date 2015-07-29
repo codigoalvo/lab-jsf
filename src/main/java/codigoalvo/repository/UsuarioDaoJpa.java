@@ -1,11 +1,18 @@
 package codigoalvo.repository;
 
-import org.springframework.stereotype.Repository;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
+import org.apache.log4j.Logger;
 import codigoalvo.entity.Usuario;
 import codigoalvo.genericdao.GenericDaoJpa;
 
-@Repository("usuarioDaoJpa")
+@Named
+@RequestScoped
 public class UsuarioDaoJpa extends GenericDaoJpa<Usuario> implements UsuarioDao {
+
+    public UsuarioDaoJpa() {
+	Logger.getLogger(UsuarioDaoJpa.class).debug("####################  construct  ####################");
+    }
 
     @Override
     public Usuario buscarPorEmail(String email) {

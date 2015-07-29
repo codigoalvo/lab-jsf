@@ -2,21 +2,22 @@ package codigoalvo.controller;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.entity.Usuario;
 import codigoalvo.service.LoginService;
 import codigoalvo.util.MsgUtil;
 
-@Named
-@Scope("session")
+@SessionScoped
 @ManagedBean(name = "controleLogin")
-public class ControleLogin implements Serializable {
+public class ControleLogin extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 3670261714704666556L;
+
+    private static final Logger LOGGER = Logger.getLogger(ControleLogin.class);
 
     public static final String PAG_LOGIN_URL = "login";
     public static final String PAG_HOME_URL = "home";
@@ -31,7 +32,7 @@ public class ControleLogin implements Serializable {
     private String senha;
 
     public ControleLogin() {
-	Logger.getLogger(ControleLogin.class).debug("construct");
+	LOGGER.debug("####################  construct  ####################");
 	tentativasInvalidas = 0;
     }
 
@@ -48,6 +49,8 @@ public class ControleLogin implements Serializable {
 	} catch (Exception exc) {
 	    usuarioLogado = null;
 	    tentativasInvalidas++;
+	    LOGGER.debug("exception", exc);
+	    LOGGER.debug(exc.getMessage());
 	    MsgUtil.enviarMsgAviso(exc.getMessage());
 	    return PAG_LOGIN_URL;
 	}

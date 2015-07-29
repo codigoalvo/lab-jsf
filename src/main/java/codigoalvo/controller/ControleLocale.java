@@ -7,17 +7,18 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @SessionScoped
 @ManagedBean(name="controleLocale")
-public class ControleLocale implements Serializable {
+public class ControleLocale extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Locale currentLocale = new Locale("pt", "BR");
 
     public ControleLocale() {
-	Logger.getLogger(ControleLocale.class).debug("construct");
+	Logger.getLogger(ControleLocale.class).debug("####################  construct  ####################");
     }
 
     public void englishLocale() {

@@ -5,26 +5,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
-import javax.inject.Named;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
+import org.primefaces.context.RequestContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.entity.Usuario;
 import codigoalvo.entity.UsuarioTipo;
 import codigoalvo.service.UsuarioService;
 import codigoalvo.util.ErrosUtil;
 import codigoalvo.util.MsgUtil;
 
-@Named
-@Scope("session")
+@SessionScoped
 @ManagedBean(name = "controleUsuario")
-public class ControleUsuario implements Serializable {
+public class ControleUsuario extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 5839585352684182713L;
-    private static final String LISTAR = "listar?faces-redirect=true";
-    private static final String EDITAR = "editar?faces-redirect=true";
+    private static final String LISTAR = null; // "listar?faces-redirect=true";
+    private static final String EDITAR = null; // "editar?faces-redirect=true";
 
     @Inject
     private transient UsuarioService usuarioService;
@@ -37,7 +37,8 @@ public class ControleUsuario implements Serializable {
     private SelectItem[] tiposUsuario;
 
     public ControleUsuario() {
-	Logger.getLogger(ControleUsuario.class).debug("construct");
+	Logger.getLogger(ControleUsuario.class).debug("####################  construct  ####################");
+	usuario = new Usuario();
 	editando = false;
 	carregaTiposUsuario();
     }
@@ -57,39 +58,49 @@ public class ControleUsuario implements Serializable {
 	return tiposUsuario;
     }
 
+    public String listar() {
+	Logger.getLogger(ControleUsuario.class).debug("listar");
+	editando = false;
+	return "/admin/usuario/listar?faces-redirect=true";
+    }
+
+    public void consultar() {
+	Logger.getLogger(ControleUsuario.class).debug("consultar");
+	usuarios = usuarioService.listar();
+    }
+
     public String novo() {
+	Logger.getLogger(ControleUsuario.class).debug("novo");
 	usuario = new Usuario();
+	editando = true;
 	return EDITAR;
     }
 
     public String alterar(Usuario usuario) {
 	Logger.getLogger(ControleUsuario.class).debug("alterar");
 	this.usuario = usuario;
+	editando = true;
 	return EDITAR;
     }
 
     public String cancelar() {
 	Logger.getLogger(ControleUsuario.class).debug("cancelar");
+	editando = false;
 	return LISTAR;
     }
 
-    public String listar() {
-	Logger.getLogger(ControleUsuario.class).debug("listar");
-	usuarios = usuarioService.listar();
-	editando = false;
-	return "/admin/usuario/listar?faces-redirect=true";
-    }
-
-    public String gravar() {
+    public void gravar() {
 	Logger.getLogger(ControleUsuario.class).debug("gravar");
-	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
+	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":msgs-dialog");
 	try {
 	    usuario = usuarioService.gravar(usuario);
 	    MsgUtil.enviarMsgInfo("gravar.sucesso");
-	    return LISTAR;
+	    editando = false;
+	    RequestContext.getCurrentInstance().execute("PF('dialogEditar').hide()");
+//	    return LISTAR;
 	} catch (SQLException exc) {
 	    MsgUtil.enviarMsgErro("gravar.erro", ErrosUtil.getMensagemErro(exc));
-	    return EDITAR;
+//	    return EDITAR;
 	}
     }
 

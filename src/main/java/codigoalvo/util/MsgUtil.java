@@ -37,8 +37,11 @@ public class MsgUtil {
     }
 
     private static void enviarMsg(FacesMessage.Severity severity, String summary, String detail) {
-	Object[] paramArray = MsgParamUtil.getParamArray(summary);
-	if (paramArray.length > 0) {
+	Object[] paramArray = null;
+	if (summary != null && !summary.isEmpty()) {
+	    paramArray = MsgParamUtil.getParamArray(summary);
+	}
+	if (paramArray != null && paramArray.length > 0) {
 	    summary = MsgParamUtil.getMessageId(summary);
 	}
 	summary = i18nMsg(summary, paramArray);

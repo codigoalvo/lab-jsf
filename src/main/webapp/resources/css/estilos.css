@@ -57,7 +57,7 @@ body {
 }
 
 #rodape {
-	position: absolute;
+	position: fixed;
     bottom: 0;
     margin: 0 auto;
     padding-top: 10px;
@@ -86,6 +86,11 @@ body {
 .botaoLink:hover {
 	background-color: #0099cc;
 	color: #ffffff;
+}
+
+.loginPanel {
+	display:inline-block;
+	margin-top:80px;
 }
 
 .menu, .menu * { /* SuperFish Menu Styles */

@@ -96,8 +96,8 @@
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
 	border: 1px solid #dddddd;
-	background: #dfdfdf;
-	color: #555555;
+	background: #eaeaea;
+	color: #0099cc;
 }
 
 .ui-state-highlight a,
@@ -764,10 +764,16 @@ button.ui-button.ui-state-active span {
 /* PrimeFaces Extensions */
 
 .ui-menu, .ui-menu .ui-menu-child{
-	background:#c4c4c4;
-	background:#c4c4c4 linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
-	background:#c4c4c4 -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.8)), to(rgba(255,255,255,0)));
-	background:#c4c4c4 -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	border: 1px solid #d9d9d9;
+	color: #222222;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background: #fafafa url("") 0 0 repeat-x;
+	/* Old browsers */ background: -moz-linear-gradient(top, #fafafa 0%, #eeeeee 100%);
+	/* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #eeeeee));
+	/* Chrome,Safari4+ */ background: -webkit-linear-gradient(top, #fafafa 0%, #eeeeee 100%);
+	/* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top, #fafafa 0%, #eeeeee 100%);
+	/* Opera11.10+ */ background: -ms-linear-gradient(top, #fafafa 0%, #eeeeee 100%);
+	/* IE10+ */ background: linear-gradient(top, #fafafa 0%, #eeeeee 100%);
 }
 
 *html .ui-menu .ui-menu-list{
@@ -780,7 +786,12 @@ button.ui-button.ui-state-active span {
 
 *html .ui-menu .ui-menuitem-link{
 	border-color:#c4c4c4;
-	filter:chroma(color=#c4c4c4);
+	filter:chroma(color=#0099cc);
+}
+
+.ui-menuitem-link:hover,
+.ui-menuitem-link .ui-state-hover {
+	color: #0099cc;
 }
 
 .ui-datatable-odd{
