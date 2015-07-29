@@ -5,9 +5,13 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="tituloJanela">#{msg['usuario.listar.titulo']}</ui:define>
 	<ui:define name="conteudo">
-		<h:form>
-			<p:growl id="messages" />
-			<p:dataTable value="#{controleUsuario.usuarios}" var="usuario" paginator="true" paginatorPosition="bottom" rows="5" resizableColumns="true"  tableStyle="table-layout: auto;" style="width:95%;">
+		<f:metadata>
+			<f:viewAction action="#{controleUsuario.consultar}" />
+		</f:metadata>
+		<p:growl id="messages" />
+		<h:form id="listagem">
+			<p:dataTable value="#{controleUsuario.usuarios}" var="usuario" paginator="true" paginatorPosition="bottom" rows="5"
+				resizableColumns="true" tableStyle="table-layout: auto;" style="width:95%;">
 				<f:facet name="header">
 					<div align="center">
 						<h:outputLabel value="#{msg['usuario.listar.titulo']}" style="padding:5px;" />
@@ -34,17 +38,67 @@
 				<p:column width="10%">
 					<f:facet name="header">
 						<div align="center">
-							<p:commandButton action="#{controleUsuario.novo()}" value="#{msg['listar.novo']}" icon="ui-icon-document" />
+							<p:commandButton action="#{controleUsuario.novo()}" value="#{msg['listar.novo']}" icon="ui-icon-document"
+								process="@this" update=":frm-edicao:dlg-edicao" oncomplete="PF('dialogEditar').show()">
+								<p:resetInput target=":frm-edicao:dlg-edicao" />
+							</p:commandButton>
 						</div>
 					</f:facet>
-					<div align="center" >
-							<p:commandButton action="#{controleUsuario.alterar(usuario)}" title="#{msg['listar.alterar']}" icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza" />
-							<p:commandButton action="#{controleUsuario.excluir(usuario)}" title="#{msg['listar.excluir']}" icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza"
-								onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false" />
+					<div align="center">
+						<p:commandButton action="#{controleUsuario.alterar(usuario)}" title="#{msg['listar.alterar']}"
+							icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza"
+							process="@this" update=":frm-edicao:dlg-edicao" oncomplete="PF('dialogEditar').show()">
+								<p:resetInput target=":frm-edicao:dlg-edicao" />
+							</p:commandButton>
+						<p:commandButton action="#{controleUsuario.excluir(usuario)}" title="#{msg['listar.excluir']}"
+							icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza"
+							onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false"
+							process="@this" update=":frm-edicao:dlg-edicao" oncomplete="PF('dialogEditar').show()">
+								<p:resetInput target=":frm-edicao:dlg-edicao" />
+							</p:commandButton>
 					</div>
 				</p:column>
 			</p:dataTable>
 		</h:form>
+
+		<h:form id="frm-edicao" prependId="false">
+			<p:dialog id="dlg-edicao" widgetVar="dialogEditar" modal="true" resizable="false">
+				<p:panelGrid columns="2">
+					<f:facet name="header">
+						<div style="padding: 10px;">
+							<h:outputText value="#{msg['usuario.editar.titulo']}" />
+						</div>
+					</f:facet>
+					<f:facet name="footer">
+						<div align="center">
+							<p:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true"
+								ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" oncomplete="dialogEditar.hide();" />
+							<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.gravar']}" ajax="false"
+								icon="ui-icon-check" styleClass="botaoVerde margem_10" update="dlg-edicao" process="dlg-edicao"
+								oncomplete="if (!args.validationFailed) PF('dialogEditar').hide()" />
+						</div>
+					</f:facet>
+					<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
+					<p:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
+					<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
+					<p:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
+					<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
+					<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
+					<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
+					<p:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
+					<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />
+					<p:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
+					<h:outputLabel value="#{msg['usuario.tipo']}" for="TIPO" />
+					<p:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO" style="width:200px">
+						<f:selectItems value="#{controleUsuario.tiposUsuario}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="#{msg['usuario.ativo']}" for="ATIVO" />
+					<p:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
+				</p:panelGrid>
+				<p:messages id="msgs-dialog" />
+			</p:dialog>
+		</h:form>
+
 	</ui:define>
 </ui:composition>
 </html>

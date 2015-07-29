@@ -2,6 +2,7 @@ package codigoalvo.filter;
 
 import java.io.IOException;
 import java.io.Serializable;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,7 +12,6 @@ import javax.servlet.ServletResponse;
 // import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import codigoalvo.controller.ControleLogin;
 import codigoalvo.entity.UsuarioTipo;
@@ -24,14 +24,18 @@ public class SegurancaWebFilter implements Serializable, Filter {
 
     private static final Logger LOGGER = Logger.getLogger(SegurancaWebFilter.class);
 
+    @Inject
+    ControleLogin controleLogin;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 	throws IOException, ServletException {
 	HttpServletRequest httpRequest = (HttpServletRequest)request;
 	HttpServletResponse httpResponse = (HttpServletResponse)response;
-	HttpSession sessao = httpRequest.getSession();
 	String contextPath = httpRequest.getContextPath();
-	ControleLogin controleLogin = (ControleLogin)sessao.getAttribute("controleLogin");
+	if (controleLogin == null) {
+	    controleLogin = (ControleLogin)httpRequest.getSession().getAttribute("controleLogin");
+	}
 	String pagina = httpRequest.getRequestURL().toString();
 	if (controleLogin == null || controleLogin.getUsuarioLogado() == null) {
 	    LOGGER.debug("controleLogin: "+(controleLogin==null?"null":("usuario: "+controleLogin.getUsuarioLogado())));
