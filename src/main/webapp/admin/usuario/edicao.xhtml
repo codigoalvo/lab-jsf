@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<h:form id="frm-edicao" prependId="false">
+	<p:panelGrid id="grd-edicao" columns="2">
+		<f:facet name="footer">
+			<div align="center">
+				<p:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true"
+					ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10"
+					oncomplete="dialogEditar.hide();" />	<!-- -->
+				<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.gravar']}"
+					icon="ui-icon-check" styleClass="botaoVerde margem_10"
+					process="frm-edicao" update="msgs-dialog grd-edicao"
+					oncomplete="if (args &amp;&amp; !args.validationFailed &amp;&amp; !args.exceptionOccurred) PF('dialogEditar').hide()" />
+			</div>
+		</f:facet>
+		<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
+		<p:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
+		<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
+		<p:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
+		<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
+		<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
+		<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
+		<p:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
+		<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />
+		<p:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
+		<h:outputLabel value="#{msg['usuario.tipo']}" for="TIPO" />
+		<p:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO">
+			<f:selectItems value="#{controleUsuario.tiposUsuario}" />
+		</p:selectOneMenu>
+		<h:outputLabel value="#{msg['usuario.ativo']}" for="ATIVO" />
+		<p:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
+	</p:panelGrid>
+	<p:focus for="LOGIN" />
+	<p:messages id="msgs-dialog" />
+</h:form>
+</html>

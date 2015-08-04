@@ -49,7 +49,7 @@ public class MsgUtil {
 	    summary += " (" + detail + ")";
 	    detail = null;
 	}
-	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+	FacesMessage msg = new FacesMessage(severity, summary, detail);
 	FacesContext context = FacesContext.getCurrentInstance();
 	if (context != null) {
 	    context.addMessage(null, msg);

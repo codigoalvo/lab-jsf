@@ -35,16 +35,14 @@ body {
 }
 
 #cabecalho {
-	height: 45px;
 	width: 100%;
 	border-bottom: solid 1px #eaeaea;
 	background-color: #fafafa;
-	padding-top: 5px;
 }
 
 .cabecalho_logo {
 	height:35px;
-	padding:2px;
+	padding:3px;
 	padding-left:10px;
 }
 
@@ -93,6 +91,10 @@ body {
 	margin-top:80px;
 }
 
+.crudGrid {
+	width: 95%;
+}
+
 .menu, .menu * { /* SuperFish Menu Styles */
 	margin: 0;
 	padding: 0;
@@ -105,13 +107,10 @@ body {
 	font-size: 22px;
 }
 
-.menu {
-	height:25px;
-}
 .menu a {
 	display:block;
 	color:#0099CC;
-	padding-bottom:5px;
+	padding-bottom:3px;
 }
 .menu a:hover {
 	text-decoration:none;
@@ -126,7 +125,7 @@ body {
 .menu li {
 	float: left;
 	position: relative;
-	margin: 0 14px 0 0px;
+	margin-right: 14px;
 	padding: 0px;
 }
 

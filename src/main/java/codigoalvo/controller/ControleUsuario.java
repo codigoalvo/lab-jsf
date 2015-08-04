@@ -11,6 +11,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CloseEvent;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.entity.Usuario;
 import codigoalvo.entity.UsuarioTipo;
@@ -23,7 +24,8 @@ import codigoalvo.util.MsgUtil;
 public class ControleUsuario extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 5839585352684182713L;
-    private static final String LISTAR = null; // "listar?faces-redirect=true";
+    private static final Logger LOGGER = Logger.getLogger(ControleUsuario.class);
+    private static final String LISTAR = "listar?faces-redirect=true";
     private static final String EDITAR = null; // "editar?faces-redirect=true";
 
     @Inject
@@ -32,15 +34,12 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     private List<Usuario> usuarios;
 
     private Usuario usuario;
-    private Boolean editando;
 
     private SelectItem[] tiposUsuario;
 
     public ControleUsuario() {
-	Logger.getLogger(ControleUsuario.class).debug("####################  construct  ####################");
+	LOGGER.debug("####################  construct  ####################");
 	usuario = new Usuario();
-	editando = false;
-	carregaTiposUsuario();
     }
 
     private void carregaTiposUsuario() {
@@ -55,12 +54,14 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     }
 
     public SelectItem[] getTiposUsuario() {
+	if (tiposUsuario == null) {
+	    carregaTiposUsuario();
+	}
 	return tiposUsuario;
     }
 
     public String listar() {
 	Logger.getLogger(ControleUsuario.class).debug("listar");
-	editando = false;
 	return "/admin/usuario/listar?faces-redirect=true";
     }
 
@@ -71,45 +72,50 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 
     public String novo() {
 	Logger.getLogger(ControleUsuario.class).debug("novo");
-	usuario = new Usuario();
-	editando = true;
+	this.usuario = new Usuario();
 	return EDITAR;
     }
 
     public String alterar(Usuario usuario) {
 	Logger.getLogger(ControleUsuario.class).debug("alterar");
 	this.usuario = usuario;
-	editando = true;
 	return EDITAR;
     }
 
     public String cancelar() {
 	Logger.getLogger(ControleUsuario.class).debug("cancelar");
-	editando = false;
 	return LISTAR;
     }
 
-    public void gravar() {
+    public String gravar() {
 	Logger.getLogger(ControleUsuario.class).debug("gravar");
-	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":msgs-dialog");
+	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("msgs-dialog");
 	try {
 	    usuario = usuarioService.gravar(usuario);
 	    MsgUtil.enviarMsgInfo("gravar.sucesso");
-	    editando = false;
-	    RequestContext.getCurrentInstance().execute("PF('dialogEditar').hide()");
-//	    return LISTAR;
-	} catch (SQLException exc) {
-	    MsgUtil.enviarMsgErro("gravar.erro", ErrosUtil.getMensagemErro(exc));
-//	    return EDITAR;
+	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("messages");
+	    RequestContext.getCurrentInstance().addCallbackParam("exceptionOccurred", false);
+	    return LISTAR;
+	} catch (Throwable exc) {
+	    String errorMsg = ErrosUtil.getMensagemErro(exc);
+	    LOGGER.error(errorMsg);
+	    MsgUtil.enviarMsgErro("gravar.erro", errorMsg);
+	    RequestContext.getCurrentInstance().addCallbackParam("exceptionOccurred", true);
+	    return EDITAR;
 	}
+    }
+
+    public void aoFechar(CloseEvent event) {
+	Logger.getLogger(ControleUsuario.class).debug("aoFechar");
+	consultar();
     }
 
     public String excluir(Usuario usuario) {
 	Logger.getLogger(ControleUsuario.class).debug("excluir");
-	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	try {
 	    usuarioService.remover(usuario);
 	    MsgUtil.enviarMsgInfo("remover.sucesso");
+	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	} catch (SQLException exc) {
 	    MsgUtil.enviarMsgErro("remover.erro", ErrosUtil.getMensagemErro(exc));
 	}
@@ -122,14 +128,6 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 
     public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
-    }
-
-    public Boolean getEditando() {
-	return editando;
-    }
-
-    public void setEditando(Boolean editando) {
-	this.editando = editando;
     }
 
     public List<Usuario> getUsuarios() {

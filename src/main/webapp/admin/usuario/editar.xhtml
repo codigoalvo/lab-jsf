@@ -4,36 +4,8 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="tituloJanela">Administração de usuario</ui:define>
-	<ui:define name="rodape"><div align="center"><h:messages id="messages" styleClass="erro" /></div></ui:define>
 	<ui:define name="conteudo">
-		<h:form id="editar" prependId="false">
-			<p:panelGrid columns="2">
-				<f:facet name="header"><div style="padding:10px;"><h:outputText value="#{msg['usuario.editar.titulo']}" /></div></f:facet>
-				<f:facet name="footer">
-					<div align="center">
-						<p:commandButton action="#{controleUsuario.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true" ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
-						<p:commandButton action="#{controleUsuario.gravar()}" value="#{msg['editar.gravar']}" ajax="false" icon="ui-icon-check" styleClass="botaoVerde margem_10" />
-					</div>
-				</f:facet>
-				<h:outputLabel value="#{msg['usuario.id']}" for="ID" />
-				<p:inputText value="#{controleUsuario.usuario.id}" readonly="true" id="ID" />
-				<h:outputLabel value="#{msg['usuario.login']}" for="LOGIN" />
-				<p:inputText value="#{controleUsuario.usuario.login}" id="LOGIN" maxlength="50" size="50" />
-				<h:outputLabel value="#{msg['usuario.senha']}" for="SENHA" />
-				<p:password value="#{controleUsuario.usuario.senha}" id="SENHA" maxlength="30" size="50" redisplay="true" />
-				<h:outputLabel value="#{msg['usuario.nome']}" for="NOME" />
-				<p:inputText value="#{controleUsuario.usuario.nome}" id="NOME" maxlength="150" size="50" />
-				<h:outputLabel value="#{msg['usuario.email']}" for="EMAIL" />
-				<p:inputText value="#{controleUsuario.usuario.email}" id="EMAIL" maxlength="250" size="50" />
-				<h:outputLabel value="#{msg['usuario.tipo']}" for="TIPO" />
-				<p:selectOneMenu value="#{controleUsuario.usuario.tipo}" id="TIPO">
-					<f:selectItems value="#{controleUsuario.tiposUsuario}" />
-				</p:selectOneMenu>
-				<h:outputLabel value="#{msg['usuario.ativo']}" for="ATIVO" />
-				<p:selectBooleanCheckbox value="#{controleUsuario.usuario.ativo}" id="ATIVO" />
-				<p:focus for="LOGIN"/>
-			</p:panelGrid>
-		</h:form>
+		<ui:include src="edicao.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>

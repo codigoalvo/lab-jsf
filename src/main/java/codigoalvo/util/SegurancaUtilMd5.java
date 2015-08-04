@@ -18,6 +18,9 @@ public class SegurancaUtilMd5 implements SegurancaUtil {
 
     @Override
     public String criptografar(String conteudo) {
+	if (conteudo == null) {
+	    return null;
+	}
 	try {
 	    MessageDigest md = MessageDigest.getInstance("MD5");
 	    byte[] bytes = md.digest(conteudo.trim().toUpperCase().getBytes("UTF-8"));
@@ -30,7 +33,7 @@ public class SegurancaUtilMd5 implements SegurancaUtil {
 
     @Override
     public boolean criptografado(String conteudo) {
-	return conteudo.endsWith("==");
+	return conteudo != null  &&  conteudo.endsWith("==");
     }
 
 }
