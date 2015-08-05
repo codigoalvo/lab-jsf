@@ -9,12 +9,13 @@
 		</f:facet>
 		<f:facet name="footer">
 			<div align="center">
-				<p:commandButton onclick="dialogEditar.hide();"  value="#{msg['editar.cancelar']}" immediate="true"
-					ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
-				<p:commandButton action="#{usuarioController.gravar()}" value="#{msg['editar.gravar']}"
+				<p:commandButton id="btnGravar" value="#{msg['editar.gravar']}" action="#{usuarioController.gravar()}"
 					icon="ui-icon-check" styleClass="botaoVerde margem_10"
 					process="frm-edicao" update="msgs-dialog grd-edicao"
 					oncomplete="if (args &amp;&amp; !args.validationFailed &amp;&amp; !args.exceptionOccurred) PF('dialogEditar').hide()" />
+				<p:commandButton id="btnCancelar" value="#{msg['editar.cancelar']}" onclick="dialogEditar.hide();" immediate="true"
+					ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
+				<p:defaultCommand target="btnGravar" />
 			</div>
 		</f:facet>
 		<h:outputLabel value="#{msg['usuario.id']}" for="ID" />

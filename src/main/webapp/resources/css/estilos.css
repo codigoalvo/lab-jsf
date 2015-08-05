@@ -187,7 +187,7 @@ body {
 }
 
 .margem_10 {
-	margin: 10px;
+	margin: 10px !important;
 }
 
 .margem_hz_10 {

@@ -246,9 +246,10 @@ button.ui-button.ui-state-default span,
 }
 
 .ui-button:hover,
+.ui-button.ui-state-hover,
 button.ui-button.ui-state-hover,
-.ui-button.ui-state-hover
 .ui-button:focus,
+.ui-button.ui-state-focus,
 button.ui-button.ui-state-focus {
 	border: 1px solid #0099cc;
 	background: #00bfff;
@@ -872,9 +873,11 @@ button.ui-button.ui-state-active span {
 
 .botaoAzul:hover, 
 .botaoAzul .ui-button:hover,
-.botaoAzul button.ui-button.ui-state-hover,
 .botaoAzul .ui-button.ui-state-hover,
+.botaoAzul button.ui-button.ui-state-hover,
+.botaoAzul:focus,
 .botaoAzul .ui-button:focus,
+.botaoAzul .ui-button.ui-state-focus,
 .botaoAzul button.ui-button.ui-state-focus {
 	color: #ffffff !important;
 	border: 1px solid #0099cc !important;
@@ -906,9 +909,11 @@ button.ui-button.ui-state-active span {
 
 .botaoVerde:hover, 
 .botaoVerde .ui-button:hover,
-.botaoVerde button.ui-button.ui-state-hover,
 .botaoVerde .ui-button.ui-state-hover,
+.botaoVerde button.ui-button.ui-state-hover,
+.botaoVerde:focus,
 .botaoVerde .ui-button:focus,
+.botaoVerde .ui-button.ui-state-focus,
 .botaoVerde button.ui-button.ui-state-focus {
 	color: #ffffff !important;
 	background: #00ec00 !important;
@@ -939,9 +944,11 @@ button.ui-button.ui-state-active span {
 
 .botaoCinza:hover, 
 .botaoCinza .ui-button:hover,
-.botaoCinza button.ui-button.ui-state-hover,
 .botaoCinza .ui-button.ui-state-hover,
+.botaoCinza button.ui-button.ui-state-hover,
+.botaoCinza:focus,
 .botaoCinza .ui-button:focus,
+.botaoCinza .ui-button.ui-state-focus,
 .botaoCinza button.ui-button.ui-state-focus {
 	color: #ffffff  !important;
 	background: #cfcfcf !important;
@@ -972,9 +979,11 @@ button.ui-button.ui-state-active span {
 
 .botaoVermelho:hover, 
 .botaoVermelho .ui-button:hover,
-.botaoVermelho button.ui-button.ui-state-hover,
 .botaoVermelho .ui-button.ui-state-hover,
+.botaoVermelho button.ui-button.ui-state-hover,
+.botaoVermelho:focus,
 .botaoVermelho .ui-button:focus,
+.botaoVermelho .ui-button.ui-state-focus,
 .botaoVermelho button.ui-button.ui-state-focus {
 	color: #ffffff !important;
 	background: #ea0000  !important;

@@ -47,22 +47,29 @@
 					</f:facet>
 					<div align="center">
 						<p:commandButton action="#{usuarioController.alterar(usuario)}" title="#{msg['listar.alterar']}"
-							icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza" 
-							 process="@this" update="dlg-edicao" oncomplete="PF('dialogEditar').show()">
+							icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza" process="@this"
+							update="dlg-edicao" oncomplete="PF('dialogEditar').show()">
 							<p:resetInput target="frm-edicao" />
 						</p:commandButton>
 						<p:commandButton action="#{usuarioController.excluir(usuario)}" title="#{msg['listar.excluir']}"
-							icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza" update="frm-lista messages"
-							onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false">
+							icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza" update="frm-lista messages">
+					<!-- 	onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false">  -->
+							<p:confirm header="#{msg['atencao']}" message="#{msg['mensagem.confirmarExclusao']}" icon="ui-icon-alert" />
 						</p:commandButton>
 					</div>
 				</p:column>
 			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<div align="center">
+					<p:commandButton value="#{msg['sim']}" type="button" styleClass="ui-confirmdialog-yes botaoVerde margem_10" icon="ui-icon-check" />
+					<p:commandButton value="#{msg['nao']}" type="button" styleClass="ui-confirmdialog-no botaoVermelho margem_10" icon="ui-icon-close" />
+				</div>
+			</p:confirmDialog>
 		</h:form>
 
-		<!-- Comentar este trecho para usar a pagina editar.xhtml -->
-		<p:dialog id="dlg-edicao" widgetVar="dialogEditar" header="#{msg['usuario.editar.titulo']}"
-			modal="true" resizable="false" dynamic="true" closeOnEscape="true" >
+		<p:dialog id="dlg-edicao" widgetVar="dialogEditar" header="#{msg['usuario.editar.titulo']}" modal="true"
+			resizable="false" dynamic="true" closeOnEscape="true">
 			<ui:include src="edicao.xhtml" />
 		</p:dialog>
 
