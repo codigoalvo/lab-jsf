@@ -14,10 +14,6 @@
 
 	<!-- Scan for all of Spring components such as Spring Service -->
 	<context:component-scan base-package="codigoalvo" />
-	<context:component-scan base-package="codigoalvo.controle"/> 
-	<context:component-scan base-package="codigoalvo.genericdao"/> 
-	<context:component-scan base-package="codigoalvo.modelo.dao"/> 
-	<context:component-scan base-package="codigoalvo.modelo.entidades"/>
 
 	<!-- Necessary to get the entity manager injected into the factory bean -->
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />   

@@ -1,2 +1,2 @@
-insert into usuario (id, login, senha, nome, email, tipo) values (1, 'admin','c6zZpZchMLdQZsgllaH64w==', 'Administrador', 'admin@email.com', 'ADMIN');
+insert into usuario (id, login, senha, nome, email, tipo, tentativas_login_invalido) values (1, 'admin','c6zZpZchMLdQZsgllaH64w==', 'Administrador', 'admin@email.com', 'ADMIN', 0);
 alter sequence SEQ_GRUPO_ID restart with 2;
