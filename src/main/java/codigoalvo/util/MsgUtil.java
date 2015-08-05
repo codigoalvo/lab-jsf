@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class MsgUtil {
 
     private static final Logger LOGGER = Logger.getLogger(MsgUtil.class);
-    private static final boolean DETAIN_IN_SUMARY = true;
+    private static final boolean DETAIL_IN_SUMARY = true;
 
     public static void enviarMsgInfo(String message) {
 	enviarMsgInfo(message, "");
@@ -45,7 +45,7 @@ public class MsgUtil {
 	    summary = MsgParamUtil.getMessageId(summary);
 	}
 	summary = i18nMsg(summary, paramArray);
-	if (DETAIN_IN_SUMARY && detail != null && !detail.isEmpty()) {
+	if (DETAIL_IN_SUMARY && detail != null && !detail.isEmpty()) {
 	    summary += " (" + detail + ")";
 	    detail = null;
 	}

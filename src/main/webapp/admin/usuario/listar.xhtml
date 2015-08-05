@@ -12,28 +12,28 @@
 		<h:form id="frm-lista">
 			<p:dataTable id="tblUsuarios" value="#{usuarioController.usuarios}" var="usuario" paginator="true"
 				paginatorPosition="bottom" rows="5" rowKey="#{usuario.id}" resizableColumns="true" tableStyle="table-layout: auto;"
-				styleClass="crudGrid" selection="#{usuarioController.usuario}">
+				styleClass="crudGrid" selection="#{usuarioController.usuario}" sortBy="#{usuario.login}">
 				<f:facet name="header">
 					<div align="center">
 						<h:outputLabel value="#{msg['usuario.listar.titulo']}" style="padding:5px;" />
 					</div>
 				</f:facet>
-				<p:column headerText="#{msg['usuario.id']}" width="3%">
+				<p:column headerText="#{msg['usuario.id']}" sortBy="#{usuario.id}" width="3%">
 					<h:outputText value="#{usuario.id}" />
 				</p:column>
-				<p:column headerText="#{msg['usuario.login']}" width="15%">
+				<p:column headerText="#{msg['usuario.login']}" sortBy="#{usuario.login}" width="15%">
 					<h:outputText value="#{usuario.login}" />
 				</p:column>
-				<p:column headerText="#{msg['usuario.nome']}" width="25%">
+				<p:column headerText="#{msg['usuario.nome']}" sortBy="#{usuario.nome}" width="25%">
 					<h:outputText value="#{usuario.nome}" />
 				</p:column>
-				<p:column headerText="#{msg['usuario.email']}" width="25%">
+				<p:column headerText="#{msg['usuario.email']}" sortBy="#{usuario.email}" width="25%">
 					<h:outputText value="#{usuario.email}" />
 				</p:column>
-				<p:column headerText="#{msg['usuario.tipo']}" width="10%">
+				<p:column headerText="#{msg['usuario.tipo']}" sortBy="#{usuario.tipo}" width="10%">
 					<h:outputText value="#{usuario.tipo.descricao}" />
 				</p:column>
-				<p:column headerText="#{msg['usuario.ativo']}" width="4%">
+				<p:column headerText="#{msg['usuario.ativo']}" sortBy="#{usuario.ativo}" width="4%">
 					<h:outputText value="#{usuario.ativo?msg['sim']:msg['nao']}" />
 				</p:column>
 				<p:column width="10%">
@@ -61,8 +61,8 @@
 		</h:form>
 
 		<!-- Comentar este trecho para usar a pagina editar.xhtml -->
-		<p:dialog id="dlg-edicao" widgetVar="dialogEditar" header="#{msg['usuario.editar.titulo']}" modal="true" resizable="false" dynamic="true">
-			<p:ajax event="close" listener="#{usuarioController.aoFechar}" />
+		<p:dialog id="dlg-edicao" widgetVar="dialogEditar" header="#{msg['usuario.editar.titulo']}"
+			modal="true" resizable="false" dynamic="true" closeOnEscape="true" >
 			<ui:include src="edicao.xhtml" />
 		</p:dialog>
 

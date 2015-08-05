@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CloseEvent;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import codigoalvo.entity.Usuario;
 import codigoalvo.entity.UsuarioTipo;
 import codigoalvo.service.UsuarioService;
 import codigoalvo.util.ErrosUtil;
+import codigoalvo.util.FacesUtil;
 import codigoalvo.util.MsgUtil;
 
 @SessionScoped
@@ -25,8 +25,6 @@ public class UsuarioController extends SpringBeanAutowiringSupport implements Se
 
     private static final long serialVersionUID = 5839585352684182713L;
     private static final Logger LOGGER = Logger.getLogger(UsuarioController.class);
-    private static final String LISTAR = "listar?faces-redirect=true";
-    private static final String EDITAR = null; // "editar?faces-redirect=true";
 
     @Inject
     private transient UsuarioService usuarioService;
@@ -70,55 +68,47 @@ public class UsuarioController extends SpringBeanAutowiringSupport implements Se
 	usuarios = usuarioService.listar();
     }
 
-    public String novo() {
+    public void novo() {
 	Logger.getLogger(UsuarioController.class).debug("novo");
 	this.usuario = new Usuario();
-	return EDITAR;
     }
 
-    public String alterar(Usuario usuario) {
+    public void alterar(Usuario usuario) {
 	Logger.getLogger(UsuarioController.class).debug("alterar");
-	this.usuario = usuario;
-	return EDITAR;
+	this.usuario = new Usuario();
+	BeanUtils.copyProperties(usuario, this.usuario);
     }
 
-    public String cancelar() {
+    public void cancelar() {
 	Logger.getLogger(UsuarioController.class).debug("cancelar");
-	return LISTAR;
     }
 
-    public String gravar() {
+    public void gravar() {
 	Logger.getLogger(UsuarioController.class).debug("gravar");
 	try {
 	    usuario = usuarioService.gravar(usuario);
-	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
-	    MsgUtil.enviarMsgInfo("gravar.sucesso");
+	    consultar();
 	    RequestContext.getCurrentInstance().addCallbackParam("exceptionOccurred", false);
-	    return LISTAR;
+	    MsgUtil.enviarMsgInfo("gravar.sucesso");
+	    FacesUtil.atualizarComponentes("messages", "frm-lista");
 	} catch (Throwable exc) {
 	    String errorMsg = ErrosUtil.getMensagemErro(exc);
 	    LOGGER.error(errorMsg);
 	    MsgUtil.enviarMsgErro("gravar.erro", errorMsg);
 	    RequestContext.getCurrentInstance().addCallbackParam("exceptionOccurred", true);
-	    return EDITAR;
 	}
     }
 
-    public void aoFechar(CloseEvent event) {
-	Logger.getLogger(UsuarioController.class).debug("aoFechar");
-	consultar();
-    }
-
-    public String excluir(Usuario usuario) {
+    public void excluir(Usuario usuario) {
 	Logger.getLogger(UsuarioController.class).debug("excluir");
 	try {
 	    usuarioService.remover(usuario);
-	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
+	    consultar();
 	    MsgUtil.enviarMsgInfo("remover.sucesso");
+	    FacesUtil.atualizarComponentes("messages");
 	} catch (SQLException exc) {
 	    MsgUtil.enviarMsgErro("remover.erro", ErrosUtil.getMensagemErro(exc));
 	}
-	return LISTAR;
     }
 
     public Usuario getUsuario() {

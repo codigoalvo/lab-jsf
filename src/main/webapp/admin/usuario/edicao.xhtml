@@ -4,11 +4,13 @@
 
 <h:form id="frm-edicao" prependId="false">
 	<p:panelGrid id="grd-edicao" columns="2">
+		<f:facet name="header">
+			<p:messages id="msgs-dialog" styleClass="msg-dlg-usuario" />
+		</f:facet>
 		<f:facet name="footer">
 			<div align="center">
-				<p:commandButton action="#{usuarioController.cancelar()}" value="#{msg['editar.cancelar']}" immediate="true"
-					ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10"
-					oncomplete="dialogEditar.hide();" />	<!-- -->
+				<p:commandButton onclick="dialogEditar.hide();"  value="#{msg['editar.cancelar']}" immediate="true"
+					ajax="false" icon="ui-icon-closethick" styleClass="botaoVermelho margem_10" />
 				<p:commandButton action="#{usuarioController.gravar()}" value="#{msg['editar.gravar']}"
 					icon="ui-icon-check" styleClass="botaoVerde margem_10"
 					process="frm-edicao" update="msgs-dialog grd-edicao"
@@ -33,6 +35,6 @@
 		<p:selectBooleanCheckbox value="#{usuarioController.usuario.ativo}" id="ATIVO" />
 	</p:panelGrid>
 	<p:focus for="LOGIN" />
-	<p:messages id="msgs-dialog" />
+	<p:growl id="growl-dialog"/>
 </h:form>
 </html>

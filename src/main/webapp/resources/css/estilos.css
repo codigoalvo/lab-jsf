@@ -113,6 +113,10 @@ body {
 	width: 95%;
 }
 
+.msg-dlg-usuario {
+	max-width: 460px;
+}
+
 .menu, .menu * { /* SuperFish Menu Styles */
 	margin: 0;
 	padding: 0;

@@ -1,4 +1,4 @@
-package codigoalvo.util;
+package codigoalvo.util.cdi;
 
 /*/
 import java.io.Serializable;
