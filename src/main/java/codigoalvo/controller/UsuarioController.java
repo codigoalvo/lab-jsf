@@ -20,11 +20,11 @@ import codigoalvo.util.ErrosUtil;
 import codigoalvo.util.MsgUtil;
 
 @SessionScoped
-@ManagedBean(name = "controleUsuario")
-public class ControleUsuario extends SpringBeanAutowiringSupport implements Serializable {
+@ManagedBean(name = "usuarioController")
+public class UsuarioController extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 5839585352684182713L;
-    private static final Logger LOGGER = Logger.getLogger(ControleUsuario.class);
+    private static final Logger LOGGER = Logger.getLogger(UsuarioController.class);
     private static final String LISTAR = "listar?faces-redirect=true";
     private static final String EDITAR = null; // "editar?faces-redirect=true";
 
@@ -37,7 +37,7 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
 
     private SelectItem[] tiposUsuario;
 
-    public ControleUsuario() {
+    public UsuarioController() {
 	LOGGER.debug("####################  construct  ####################");
 	usuario = new Usuario();
     }
@@ -61,39 +61,38 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     }
 
     public String listar() {
-	Logger.getLogger(ControleUsuario.class).debug("listar");
+	Logger.getLogger(UsuarioController.class).debug("listar");
 	return "/admin/usuario/listar?faces-redirect=true";
     }
 
     public void consultar() {
-	Logger.getLogger(ControleUsuario.class).debug("consultar");
+	Logger.getLogger(UsuarioController.class).debug("consultar");
 	usuarios = usuarioService.listar();
     }
 
     public String novo() {
-	Logger.getLogger(ControleUsuario.class).debug("novo");
+	Logger.getLogger(UsuarioController.class).debug("novo");
 	this.usuario = new Usuario();
 	return EDITAR;
     }
 
     public String alterar(Usuario usuario) {
-	Logger.getLogger(ControleUsuario.class).debug("alterar");
+	Logger.getLogger(UsuarioController.class).debug("alterar");
 	this.usuario = usuario;
 	return EDITAR;
     }
 
     public String cancelar() {
-	Logger.getLogger(ControleUsuario.class).debug("cancelar");
+	Logger.getLogger(UsuarioController.class).debug("cancelar");
 	return LISTAR;
     }
 
     public String gravar() {
-	Logger.getLogger(ControleUsuario.class).debug("gravar");
-	FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("msgs-dialog");
+	Logger.getLogger(UsuarioController.class).debug("gravar");
 	try {
 	    usuario = usuarioService.gravar(usuario);
+	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
 	    MsgUtil.enviarMsgInfo("gravar.sucesso");
-	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("messages");
 	    RequestContext.getCurrentInstance().addCallbackParam("exceptionOccurred", false);
 	    return LISTAR;
 	} catch (Throwable exc) {
@@ -106,16 +105,16 @@ public class ControleUsuario extends SpringBeanAutowiringSupport implements Seri
     }
 
     public void aoFechar(CloseEvent event) {
-	Logger.getLogger(ControleUsuario.class).debug("aoFechar");
+	Logger.getLogger(UsuarioController.class).debug("aoFechar");
 	consultar();
     }
 
     public String excluir(Usuario usuario) {
-	Logger.getLogger(ControleUsuario.class).debug("excluir");
+	Logger.getLogger(UsuarioController.class).debug("excluir");
 	try {
 	    usuarioService.remover(usuario);
-	    MsgUtil.enviarMsgInfo("remover.sucesso");
 	    FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add(":messages");
+	    MsgUtil.enviarMsgInfo("remover.sucesso");
 	} catch (SQLException exc) {
 	    MsgUtil.enviarMsgErro("remover.erro", ErrosUtil.getMensagemErro(exc));
 	}

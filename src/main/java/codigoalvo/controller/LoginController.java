@@ -12,12 +12,12 @@ import codigoalvo.service.LoginService;
 import codigoalvo.util.MsgUtil;
 
 @SessionScoped
-@ManagedBean(name = "controleLogin")
-public class ControleLogin extends SpringBeanAutowiringSupport implements Serializable {
+@ManagedBean(name = "loginController")
+public class LoginController extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 3670261714704666556L;
 
-    private static final Logger LOGGER = Logger.getLogger(ControleLogin.class);
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
 
     public static final String PAG_LOGIN_URL = "login";
     public static final String PAG_HOME_URL = "home";
@@ -31,7 +31,7 @@ public class ControleLogin extends SpringBeanAutowiringSupport implements Serial
     private String login;
     private String senha;
 
-    public ControleLogin() {
+    public LoginController() {
 	LOGGER.debug("####################  construct  ####################");
 	tentativasInvalidas = 0;
     }

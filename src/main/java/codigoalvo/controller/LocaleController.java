@@ -10,15 +10,15 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @SessionScoped
-@ManagedBean(name="controleLocale")
-public class ControleLocale extends SpringBeanAutowiringSupport implements Serializable {
+@ManagedBean(name="localeController")
+public class LocaleController extends SpringBeanAutowiringSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Locale currentLocale = new Locale("pt", "BR");
 
-    public ControleLocale() {
-	Logger.getLogger(ControleLocale.class).debug("####################  construct  ####################");
+    public LocaleController() {
+	Logger.getLogger(LocaleController.class).debug("####################  construct  ####################");
     }
 
     public void englishLocale() {

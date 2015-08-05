@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import codigoalvo.controller.ControleLogin;
+import codigoalvo.controller.LoginController;
 import codigoalvo.entity.UsuarioTipo;
 
 // @WebFilter(urlPatterns={"/privado/*", "/admin/*"}) //Colocado por enquanto no web.xml até tentar o spring-security
@@ -25,7 +25,7 @@ public class SegurancaWebFilter implements Serializable, Filter {
     private static final Logger LOGGER = Logger.getLogger(SegurancaWebFilter.class);
 
     @Inject
-    ControleLogin controleLogin;
+    LoginController loginController;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -33,19 +33,19 @@ public class SegurancaWebFilter implements Serializable, Filter {
 	HttpServletRequest httpRequest = (HttpServletRequest)request;
 	HttpServletResponse httpResponse = (HttpServletResponse)response;
 	String contextPath = httpRequest.getContextPath();
-	if (controleLogin == null) {
-	    LOGGER.debug("injectedControleLogin: "+(controleLogin==null?"null":("usuario: "+controleLogin.getUsuarioLogado())));
-	    controleLogin = (ControleLogin)httpRequest.getSession().getAttribute("controleLogin");
+	if (loginController == null) {
+	    LOGGER.debug("injectedControleLogin: "+(loginController==null?"null":("usuario: "+loginController.getUsuarioLogado())));
+	    loginController = (LoginController)httpRequest.getSession().getAttribute("loginController");
 	}
 	String pagina = httpRequest.getRequestURL().toString();
-	if (controleLogin == null || controleLogin.getUsuarioLogado() == null) {
-	    LOGGER.debug("controleLogin: "+(controleLogin==null?"null":("usuario: "+controleLogin.getUsuarioLogado())));
+	if (loginController == null || loginController.getUsuarioLogado() == null) {
+	    LOGGER.debug("controleLogin: "+(loginController==null?"null":("usuario: "+loginController.getUsuarioLogado())));
 	    LOGGER.debug(httpRequest.getRemoteAddr() + " [!] " + pagina);
 	    httpResponse.sendRedirect(contextPath + "/login" + FACES);
 	} else {
 	    if (pagina.contains("/admin/")) {
-		if (!controleLogin.getUsuarioLogado().getTipo().equals(UsuarioTipo.ADMIN)) {
-		    LOGGER.debug(httpRequest.getRemoteAddr() +"(" + controleLogin.getUsuarioLogado().getLogin() + ") [!] " + pagina);
+		if (!loginController.getUsuarioLogado().getTipo().equals(UsuarioTipo.ADMIN)) {
+		    LOGGER.debug(httpRequest.getRemoteAddr() +"(" + loginController.getUsuarioLogado().getLogin() + ") [!] " + pagina);
 		    httpResponse.sendRedirect(contextPath + "/denied" + FACES);
 		}
 	    }

@@ -12,13 +12,13 @@
 				<h:panelGrid columns="2">
 					<f:facet name="footer">
 						<div align="center">
-							<p:commandButton action="#{controleLogin.efetuarLogin()}" value="#{msg['login.enviar']}" icon="ui-icon-key" ajax="false"/>
+							<p:commandButton action="#{loginController.efetuarLogin()}" value="#{msg['login.enviar']}" icon="ui-icon-key" ajax="false"/>
 						</div>
 					</f:facet>
 					<h:outputLabel value="#{msg['login.usuario']}" for="Usuario" />
-					<p:inputText value="#{controleLogin.login}" id="Usuario" />
+					<p:inputText value="#{loginController.login}" id="Usuario" />
 					<h:outputLabel value="#{msg['login.senha']}" for="Senha" />
-					<p:password value="#{controleLogin.senha}" id="Senha" redisplay="true" />
+					<p:password value="#{loginController.senha}" id="Senha" redisplay="true" />
 					<p:focus for="Usuario"/>
 				</h:panelGrid>
 				</p:panel>

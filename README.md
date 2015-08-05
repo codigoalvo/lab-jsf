@@ -1,5 +1,12 @@
 lab-jsf
 
+===== Release 0.0.3-SNAPSHOT - 05/08/2015 =====
+*Realizado
+- Refactor rename nos controllers
+*Pendências e Implementar:
+- Todas as do release 0.0.2
+- Corrigir bug onde ao gravar ou excluir não exibe a mensagem no Growl do listar
+
 ===== Release 0.0.2-SNAPSHOT - 05/08/2015 =====
 *Realizado:
 - Login e cadastro de usuários 100% funcionais

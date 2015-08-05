@@ -4,17 +4,17 @@
 
 <h:form>
 	<h:graphicImage library="images" name="logo.svg" styleClass="cabecalho_logo" />
-	<h:panelGroup rendered="#{controleLogin.usuarioLogado == null}">
+	<h:panelGroup rendered="#{loginController.usuarioLogado == null}">
 		<ul class="menu menu_header right bottom">
 			<li class="menu_item"><h:commandLink action="home" value="#{msg['menu.home']}" /></li>
 			<li class="menu_item"><h:commandLink action="login" value="#{msg['menu.entrar']}" /></li>
 		</ul>
 	</h:panelGroup>
-	<h:panelGroup rendered="#{controleLogin.usuarioLogado != null}">
+	<h:panelGroup rendered="#{loginController.usuarioLogado != null}">
 		<ul class="menu menu_header right bottom">
 			<li class="menu_item"><h:commandLink action="home" value="#{msg['menu.home']}" /></li>
-			<li class="menu_item"><h:commandLink action="#{controleUsuario.listar()}" value="#{msg['menu.usuarios']}" /></li>
-			<li class="menu_item"><h:commandLink action="#{controleLogin.efetuarLogout()}" value="#{msg['menu.sair']}" /></li>
+			<li class="menu_item"><h:commandLink action="#{usuarioController.listar()}" value="#{msg['menu.usuarios']}" /></li>
+			<li class="menu_item"><h:commandLink action="#{loginController.efetuarLogout()}" value="#{msg['menu.sair']}" /></li>
 		</ul>
 	</h:panelGroup>
 </h:form>

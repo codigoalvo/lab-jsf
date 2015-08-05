@@ -6,13 +6,13 @@
 	<ui:define name="tituloJanela">#{msg['usuario.listar.titulo']}</ui:define>
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{controleUsuario.consultar}" />
+			<f:viewAction action="#{usuarioController.consultar}" />
 		</f:metadata>
 		<p:growl id="messages" />
 		<h:form id="frm-lista">
-			<p:dataTable id="tblUsuarios" value="#{controleUsuario.usuarios}" var="usuario" paginator="true"
+			<p:dataTable id="tblUsuarios" value="#{usuarioController.usuarios}" var="usuario" paginator="true"
 				paginatorPosition="bottom" rows="5" rowKey="#{usuario.id}" resizableColumns="true" tableStyle="table-layout: auto;"
-				styleClass="crudGrid" selection="#{controleUsuario.usuario}">
+				styleClass="crudGrid" selection="#{usuarioController.usuario}">
 				<f:facet name="header">
 					<div align="center">
 						<h:outputLabel value="#{msg['usuario.listar.titulo']}" style="padding:5px;" />
@@ -39,19 +39,19 @@
 				<p:column width="10%">
 					<f:facet name="header">
 						<div align="center">
-							<p:commandButton action="#{controleUsuario.novo()}" value="#{msg['listar.novo']}" icon="ui-icon-document"
+							<p:commandButton action="#{usuarioController.novo()}" value="#{msg['listar.novo']}" icon="ui-icon-document"
 								process="@this" update="dlg-edicao" oncomplete="PF('dialogEditar').show()">
 								<p:resetInput target="dlg-edicao" />
 							</p:commandButton>
 						</div>
 					</f:facet>
 					<div align="center">
-						<p:commandButton action="#{controleUsuario.alterar(usuario)}" title="#{msg['listar.alterar']}"
+						<p:commandButton action="#{usuarioController.alterar(usuario)}" title="#{msg['listar.alterar']}"
 							icon="ui-icon-pencil" style="margin-right:6px;padding:0px;width:2em" styleClass="botaoCinza" 
 							 process="@this" update="dlg-edicao" oncomplete="PF('dialogEditar').show()">
 							<p:resetInput target="frm-edicao" />
 						</p:commandButton>
-						<p:commandButton action="#{controleUsuario.excluir(usuario)}" title="#{msg['listar.excluir']}"
+						<p:commandButton action="#{usuarioController.excluir(usuario)}" title="#{msg['listar.excluir']}"
 							icon="ui-icon-trash" style="padding:0px;width:2em" styleClass="botaoCinza" update="frm-lista messages"
 							onclick="if (!confirm('#{msg['mensagem.confirmarExclusao']}')) return false">
 						</p:commandButton>
@@ -62,7 +62,7 @@
 
 		<!-- Comentar este trecho para usar a pagina editar.xhtml -->
 		<p:dialog id="dlg-edicao" widgetVar="dialogEditar" header="#{msg['usuario.editar.titulo']}" modal="true" resizable="false" dynamic="true">
-			<p:ajax event="close" listener="#{controleUsuario.aoFechar}" />
+			<p:ajax event="close" listener="#{usuarioController.aoFechar}" />
 			<ui:include src="edicao.xhtml" />
 		</p:dialog>
 
