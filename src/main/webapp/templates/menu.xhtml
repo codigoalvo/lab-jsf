@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:panelGroup>
+	<p:menubar styleClass="mainmenu">
+		<p:menuitem styleClass="mainmenu-item" value="#{msg['menu.home']}" action="home" />
+		<p:menuitem styleClass="mainmenu-item" value="#{msg['menu.entrar']}" action="login"
+			rendered="#{loginController.usuarioLogado == null}" />
+		<p:menuitem styleClass="mainmenu-item" value="#{msg['menu.usuarios']}" action="#{usuarioController.listar()}"
+			rendered="#{loginController.usuarioLogado != null}" />
+		<p:menuitem styleClass="mainmenu-item" value="#{msg['menu.sair']}" action="#{loginController.efetuarLogout()}"
+			rendered="#{loginController.usuarioLogado != null}" />
+		<p:submenu>
+			<p:menuitem>
+				<p:column>
+					<h:commandLink action="#{localeController.portugueseLocale()}" title="Português">
+						<h:graphicImage library="images" name="ptbr.png" />
+					</h:commandLink>
+				</p:column>
+			</p:menuitem>
+			<p:menuitem>
+				<p:column>
+					<h:commandLink action="#{localeController.englishLocale()}" title="Inglês">
+						<h:graphicImage library="images" name="enus.png" />
+					</h:commandLink>
+				</p:column>
+			</p:menuitem>
+		</p:submenu>
+	</p:menubar>
+</h:panelGroup>
+</html>

@@ -7,16 +7,17 @@
 		<title><ui:insert name="tituloJanela" /></title>
 		<h:outputStylesheet library="css" name="estilos.css" />
 		<h:outputScript library="scripts" name="scripts.js" />
+		<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon"/>
 	</h:head>
 	<h:body>
 		<div class="pagina">
-			<div id="cabecalho" align="left">
+			<div class="cabecalho" align="left">
 				<ui:include src="/templates/cabecalho.xhtml" />
 			</div>
 			<div class="conteudo" align="center">
 				<ui:insert name="conteudo" />
 			</div>
-			<div id="rodape">
+			<div class="rodape">
 				<ui:insert name="rodape" />
 			</div>
 		</div>

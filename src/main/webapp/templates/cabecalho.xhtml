@@ -1,22 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html">
-
 <h:form>
-	<h:graphicImage library="images" name="logo.svg" styleClass="cabecalho_logo" />
-	<h:panelGroup rendered="#{loginController.usuarioLogado == null}">
-		<ul class="menu menu_header right bottom">
-			<li class="menu_item"><h:commandLink action="home" value="#{msg['menu.home']}" /></li>
-			<li class="menu_item"><h:commandLink action="login" value="#{msg['menu.entrar']}" /></li>
-		</ul>
-	</h:panelGroup>
-	<h:panelGroup rendered="#{loginController.usuarioLogado != null}">
-		<ul class="menu menu_header right bottom">
-			<li class="menu_item"><h:commandLink action="home" value="#{msg['menu.home']}" /></li>
-			<li class="menu_item"><h:commandLink action="#{usuarioController.listar()}" value="#{msg['menu.usuarios']}" /></li>
-			<li class="menu_item"><h:commandLink action="#{loginController.efetuarLogout()}" value="#{msg['menu.sair']}" /></li>
-		</ul>
-	</h:panelGroup>
+	<table><tr>
+		<td><h:graphicImage library="images" name="logo.svg" styleClass="cabecalho_logo" /></td>
+		<td class="mainmenu-td"><ui:include src="/templates/menu.xhtml" /></td>
+	</tr></table>
 </h:form>
-
 </html>
